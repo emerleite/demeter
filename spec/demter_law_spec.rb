@@ -78,5 +78,22 @@ describe DemeterLaw do
     instance.person = person
     instance.person_phone_number.should be_eql(99999999)
     instance.person_three_undescore_method.should be_eql("nothing")
+  end
+
+  it 'Should raise error if object is not demetered' do
+    Person = Class.new
+    Person.send(:attr_accessor, :phone_number)
+
+    AClass = Class.new
+    AClass.send(:extend, DemeterLaw)
+    AClass.send(:attr_accessor, :person)
+    AClass.demeter :animal
+    instance = AClass.new
+
+    person = Person.new
+    person.phone_number = 99999999
+
+    instance.person = person
+    lambda {instance.person_phone_number}.should raise_error(NoMethodError)
   end    
 end
