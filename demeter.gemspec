@@ -1,6 +1,6 @@
 spec = Gem::Specification.new do |s|
   s.name = %q{demeter}
-  s.version = "0.9.0"
+  s.version = "1.0.1"
   s.authors = ['Emerson Macedo']
   s.email = ['emerleite@gmail.com']
   s.date = %q{2009-11-11}
@@ -11,9 +11,9 @@ spec = Gem::Specification.new do |s|
   s.require_paths = ["lib"]
   s.rubygems_version = %q{1.3.5}
  
-  s.files = [
-    'Rakefile',
-    'README',
-    'lib/demeter.rb',
-  ]
+  s.files = ['Rakefile',
+             'README',
+             'LICENCE.txt',
+             'lib/demeter.rb',
+            ]
 end

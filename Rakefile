@@ -1,5 +1,5 @@
 require "spec/rake/spectask"
-require "rake/gempakagetask"
+require "rake/gempackagetask"
 
 spec = Gem::Specification.new do |s|
   s.name = %q{demeter}

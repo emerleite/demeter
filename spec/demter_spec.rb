@@ -1,7 +1,7 @@
 require 'spec'
-require 'lib/demeter_law'
+require 'lib/demeter'
 
-describe DemeterLaw do
+describe Demeter do
   before do
     AClass = Class.new
     AClass.send(:extend, DemeterLaw)
