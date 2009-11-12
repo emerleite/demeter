@@ -214,4 +214,12 @@ describe Demeter do
     instance.person = person
     instance.person_name.should be_eql("name overrided")
   end
+
+  it 'Should return nil when demetered object is nil' do
+    AClass.send(:attr_accessor, :person)
+    AClass.demeter :person
+
+    instance = AClass.new
+    instance.person_name.should be_nil
+  end
 end
