@@ -4,7 +4,7 @@ require 'lib/demeter'
 describe Demeter do
   before do
     AClass = Class.new
-    AClass.send(:extend, DemeterLaw)
+    AClass.send(:extend, Demeter)
 
     Person = Class.new
     Animal = Class.new    
@@ -114,7 +114,7 @@ describe Demeter do
     instance.animal_name.should be_eql("marley")
   end    
 
-  it 'Should allow to extend DemeterLaw in 2 classes' do
+  it 'Should allow to extend Demeter in 2 classes' do
     Animal.send(:attr_accessor, :name)
 
     Person.send(:attr_accessor, :phone_number)
