@@ -43,11 +43,8 @@ The usuage is very straightforward. You only need to extend one module and use o
     a = Account.new
     a.customer = c
     a.manager = m
-    puts a.customer_name
-    puts a.manager_type
-
-It should print "Emerson" at console
-And should print "General" at console
+    puts a.customer_name #Should print Emerson at console
+    puts a.manager_type #Should print General at console
 
 ## Credits
 Author: Emerson Macedo
