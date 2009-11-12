@@ -9,20 +9,10 @@ module DemeterLaw
     base.send(:include, DemeterMethods)
   end
   
-  def demeter(symbol)
-    @@demeter_objects[self.to_s.to_sym] << symbol
-#     @@demeter_objects.keys.each do |key|
-#       puts "#{key}:#{@@demeter_objects[key]}"
-#     end
-    
-#     define_method :method_missing do |method, *args|
-#       message_split = method.to_s.split("_")
-      
-#       raise NoMethodError if message_split.first.to_sym != symbol
-#       object = self.send(message_split.first)
-#       message_split.delete message_split.first
-#       object.send(message_split.join("_"))
-#     end
+  def demeter(*symbols)
+    symbols.each do |symbol|
+      @@demeter_objects[self.to_s.to_sym] << symbol
+    end
   end
 
   module DemeterMethods

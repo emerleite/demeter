@@ -7,6 +7,7 @@ describe DemeterLaw do
     AClass.send(:extend, DemeterLaw)
 
     Person = Class.new
+    Animal = Class.new    
   end    
   
   it 'Should provide demeter class method when module extended' do
@@ -57,7 +58,7 @@ describe DemeterLaw do
     instance.person_gender.should be_eql("female")
   end
   
-  it 'Should allow method with undescore' do
+  it 'Should allow attribute with undescore' do
     Person.send(:attr_accessor, :phone_number)
     Person.send(:attr_accessor, :three_undescore_method)
 
@@ -88,8 +89,8 @@ describe DemeterLaw do
     lambda {instance.person_phone_number}.should raise_error(NoMethodError)
   end    
 
-  it 'Should demeter 2 objects' do
-    Animal = Class.new
+  it 'Should demeter 2 attribute objects' do
+
     Animal.send(:attr_accessor, :name)
 
     Person.send(:attr_accessor, :phone_number)
@@ -113,4 +114,104 @@ describe DemeterLaw do
     instance.animal_name.should be_eql("marley")
   end    
 
+  it 'Should allow to extend DemeterLaw in 2 classes' do
+    Animal.send(:attr_accessor, :name)
+
+    Person.send(:attr_accessor, :phone_number)
+
+    AClass.send(:attr_accessor, :person)
+    AClass.send(:attr_accessor, :animal)
+    AClass.demeter :person
+    AClass.demeter :animal
+    
+    ASecondClass = AClass
+    
+    instance = AClass.new
+
+    person = Person.new
+    person.phone_number = 99999999
+
+    animal = Animal.new
+    animal.name = "marley"
+
+    instance.person = person
+    instance.animal = animal
+    instance.person_phone_number.should be_eql(99999999)
+    instance.animal_name.should be_eql("marley")
+
+    instance2 = ASecondClass.new
+
+    person2 = Person.new
+    person2.phone_number = 88888888
+
+    animal2 = Animal.new
+    animal2.name = "fox"
+
+    instance2.person = person2
+    instance2.animal = animal2
+    instance2.person_phone_number.should be_eql(88888888)
+    instance2.animal_name.should be_eql("fox")
+  end
+
+  it 'Should demeter 2 attributes with one call' do
+    Animal.send(:attr_accessor, :name)
+
+    Person.send(:attr_accessor, :phone_number)
+
+    AClass.send(:attr_accessor, :person)
+    AClass.send(:attr_accessor, :animal)
+    AClass.demeter :person, :animal
+
+    instance = AClass.new
+
+    person = Person.new
+    person.phone_number = 99999999
+
+    animal = Animal.new
+    animal.name = "marley"
+
+    instance.person = person
+    instance.animal = animal
+    instance.person_phone_number.should be_eql(99999999)
+    instance.animal_name.should be_eql("marley")
+  end
+
+  it 'Should get value when instance attribute have diferent name' do
+    Person.class_eval do
+      define_method :initialize do |name|
+        @a_name = name
+      end
+      define_method :name do
+        @a_name
+      end
+    end
+
+    AClass.send(:attr_accessor, :person)
+    AClass.demeter :person
+    instance = AClass.new
+
+    person = Person.new "emerson"
+    
+    instance.person = person
+    instance.person_name.should be_eql("emerson")
+  end
+
+  it 'Should allow override the demeter method' do
+    Person.send(:attr_accessor, :name)
+
+    AClass.send(:attr_accessor, :person)
+    AClass.demeter :person
+    AClass.class_eval do
+      define_method :person_name do
+        "name overrided"
+      end
+    end
+    instance = AClass.new
+
+    person = Person.new
+    person.name = "emerson"
+    
+    instance.person = person
+    instance.person_name.should be_eql("name overrided")
+  end
 end
