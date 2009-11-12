@@ -17,7 +17,9 @@ spec = Gem::Specification.new do |s|
   s.files = ['Rakefile',
              'README',
              'LICENSE.txt',
+             'TODO.txt',             
              'lib/demeter.rb',
+             'spec/demeter_spec.rb',
             ]
 end
 
