@@ -21,7 +21,7 @@ The usuage is very straightforward. You only need to extend one module and use o
 
     require 'demeter'
     class Customer
-    attr_accessor :name
+      attr_accessor :name
     end
     
     class Manager
@@ -29,9 +29,9 @@ The usuage is very straightforward. You only need to extend one module and use o
     end
      
     class Account
-    extend Demeter
-    attr_accessor :customer, :manager
-    demeter :customer, :manager
+      extend Demeter
+      attr_accessor :customer, :manager
+      demeter :customer, :manager
     end
      
     c = Customer.new
