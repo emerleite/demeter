@@ -19,32 +19,32 @@ The usuage is very straightforward. You only need to extend one module and use o
 
 ## Example
 
-  require 'demeter'
-  class Customer
-  attr_accessor :name
-  end
-
-  class Manager
-    attr_accessor :type
-  end
-   
-  class Account
-  extend Demeter
-  attr_accessor :customer, :manager
-  demeter :customer, :manager
-  end
-   
-  c = Customer.new
-  c.name = "Emerson"
-   
-  m = Manager.new
-  m.type = "General"
-   
-  a = Account.new
-  a.customer = c
-  a.manager = m
-  puts a.customer_name
-  puts a.manager_type
+    require 'demeter'
+    class Customer
+    attr_accessor :name
+    end
+    
+    class Manager
+      attr_accessor :type
+    end
+     
+    class Account
+    extend Demeter
+    attr_accessor :customer, :manager
+    demeter :customer, :manager
+    end
+     
+    c = Customer.new
+    c.name = "Emerson"
+     
+    m = Manager.new
+    m.type = "General"
+     
+    a = Account.new
+    a.customer = c
+    a.manager = m
+    puts a.customer_name
+    puts a.manager_type
 
 It should print "Emerson" at console
 And should print "General" at console
