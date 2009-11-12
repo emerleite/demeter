@@ -19,19 +19,19 @@ The usuage is very straightforward. You only need to extend one module and use o
 
 ## Example
 
-   require 'demeter'
-   class Customer
-     attr_accessor :name
-   end
+  require 'demeter'
+  class Customer
+  attr_accessor :name
+  end
 
   class Manager
     attr_accessor :type
   end
    
   class Account
-    extend Demeter
-    attr_accessor :customer, :manager
-    demeter :customer, :manager
+  extend Demeter
+  attr_accessor :customer, :manager
+  demeter :customer, :manager
   end
    
   c = Customer.new
