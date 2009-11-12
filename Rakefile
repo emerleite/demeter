@@ -3,7 +3,7 @@ require "rake/gempackagetask"
 
 spec = Gem::Specification.new do |s|
   s.name = %q{demeter}
-  s.version = "1.0.2"
+  s.version = "1.0.3"
   s.authors = ['Emerson Macedo']
   s.email = ['emerleite@gmail.com']
   s.date = %q{2009-11-11}
