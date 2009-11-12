@@ -15,11 +15,11 @@ class Customer
 end
 
 class Manager
-  attr_acessor :type
+  attr_accessor :type
 end
 
 class Account
-  extend DemeterLaw
+  extend Demeter
   attr_accessor :customer, :manager
   demeter :customer, :manager
 end
