@@ -222,4 +222,43 @@ describe Demeter do
     instance = AClass.new
     instance.person_name.should be_nil
   end
+
+  it 'Should invoke old method missing when not demeter' do
+    AClass.class_eval do
+      define_method :method_missing do | method, *args |
+        "original #{method}"
+      end
+    end
+
+    AClass.send(:attr_accessor, :person)
+    AClass.demeter :person
+    
+    instance = AClass.new
+    instance.some_method.should be_eql("original some_method")
+  end
+
+  it 'Should demeter when have old method missing but invoke demetered method' do
+    AClass = Class.new
+    AClass.class_eval do
+      define_method :method_missing do | method, *args |
+        "original #{method}"
+      end
+    end
+    AClass.send(:extend, Demeter)
+
+    Person = Class.new    
+    Person.send(:attr_accessor, :name)
+
+    AClass.send(:attr_accessor, :person)
+    AClass.demeter :person
+
+    instance = AClass.new
+
+    person = Person.new
+    person.name = "emerson"
+    
+    instance.person = person
+    puts instance.person_name
+    instance.person_name.should be_eql("emerson")
+  end
 end
