@@ -15,7 +15,7 @@ spec = Gem::Specification.new do |s|
   s.rubygems_version = %q{1.3.5}
  
   s.files = ['Rakefile',
-             'README',
+             'README.md',
              'LICENSE.txt',
              'TODO.txt',             
              'lib/demeter.rb',
