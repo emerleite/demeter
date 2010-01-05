@@ -7,6 +7,11 @@ The Law of Demeter (LoD), or Principle of Least Knowledge, is a simple design st
 * Each unit should only talk to its friends; don't talk to strangers.
 * Only talk to your immediate friends.
 
+Installation
+------------
+
+	sudo gem install demeter
+
 Usage
 -----
 
