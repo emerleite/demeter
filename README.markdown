@@ -44,6 +44,17 @@ If your using ActiveRecord, you don't have to extend the `Demeter` module.
 	user = User.first
 	user.address_country
 
+You can easily override a method that has been "demeterized"; just declare it before or after calling the `demeter` method.
+
+	class User < ActiveRecord::Base
+	  has_one :address
+	  demeter_address
+
+	  def address_country
+	    @address_country ||= address.country.upcase
+	  end
+	end
+
 To-Do
 -----
 
