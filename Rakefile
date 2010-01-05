@@ -1,39 +1,38 @@
-require "spec/rake/spectask"
-require "rake/gempackagetask"
+require 'rake'
+require 'spec/rake/spectask'
+require File.dirname(__FILE__) + '/lib/demeter/version'
+require 'jeweler'
 
-spec = Gem::Specification.new do |s|
-  s.name = %q{demeter}
-  s.version = "1.0.4"
-  s.authors = ['Emerson Macedo']
-  s.email = ['emerleite@gmail.com']
-  s.date = %q{2009-11-11}
-  s.homepage = 'http://github.com/emerleite/demeter'
- 
-  s.summary = %q{An easy way to apply law of demeter to your objects}
-  s.description = %q{An easy way to apply law of demeter to your objects}
-  s.require_paths = ["lib"]
-  s.rubygems_version = %q{1.3.5}
- 
-  s.files = ['Rakefile',
-             'README.md',
-             'LICENSE.txt',
-             'TODO.txt',             
-             'lib/demeter.rb',
-             'spec/demeter_spec.rb',
-            ]
+desc 'Default: run specs.'
+task :default => :spec
+
+desc 'Run the specs'
+Spec::Rake::SpecTask.new(:spec) do |t|
+  t.spec_opts = ['--colour --format specdoc --loadby mtime --reverse']
+  t.spec_files = FileList['spec/**/*_spec.rb']
+
+  t.rcov = true
+  t.rcov_opts = %w{--exclude spec,rcov,activerecord,active_support,activesupport,builder,sqlite,json}
 end
 
-Rake::GemPackageTask.new(spec) do |pkg|
-    pkg.need_zip = true
-    pkg.need_tar = true
+JEWEL = Jeweler::Tasks.new do |gem|
+  gem.name = "demeter"
+  gem.version = Demeter::Version::STRING
+  gem.summary = "A simple way to apply the Law of Demeter to your Ruby objects."
+  gem.description = "A simple way to apply the Law of Demeter to your Ruby objects."
+
+  gem.authors = ["Emerson Macedo"]
+  gem.email = "emerleite@gmail.com"
+  gem.homepage = "http://github.com/emerleite/demeter"
+
+  gem.has_rdoc = false
+  gem.files = %w(Rakefile demeter.gemspec VERSION README.markdown) + Dir["{lib,spec}/**/*"]
 end
 
-Spec::Rake::SpecTask.new do |t|
-    t.libs << 'lib'
-    t.spec_files = FileList['spec/*_spec.rb']
-    t.rcov = true
-    t.rcov_opts = %w{--exclude spec,rcov}
-    t.fail_on_error = false
-end
+desc "Generate gemspec and build gem"
+task :build_gem do
+  File.open("VERSION", "w+") {|f| f << Demeter::Version::STRING }
 
-task :default => [:spec]
+  Rake::Task["gemspec"].invoke
+  Rake::Task["build"].invoke
+end

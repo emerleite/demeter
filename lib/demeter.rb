@@ -1,32 +1,45 @@
 module Demeter
-  def self.demeter_objects
-    @@demeter_objects
-  end
-  
-  def self.extended(base)    
-    @@demeter_objects = @@demeter_objects ||= Hash.new
-    @@demeter_objects[base.to_s.to_sym] = Array.new
-    base.send(:alias_method, :old_method_missing, :method_missing)
-    base.send(:include, DemeterMethods)
-    base.send(:alias_method, :method_missing, :demeter_method_missing)
-  end
-  
-  def demeter(*symbols)
-    symbols.each do |symbol|
-      @@demeter_objects[self.to_s.to_sym] << symbol
+  def self.extended(base)
+    base.class_eval do
+      include InstanceMethods
+      extend ClassMethods
     end
   end
 
-  module DemeterMethods
-    def demeter_method_missing(method, *args, &block)
-      message_split = method.to_s.split("_")
-      if Demeter.demeter_objects[self.class.to_s.to_sym].select { |object| message_split.first.to_sym == object }.length == 0
-        old_method_missing(method, *args, &block)
-      else
-        object = self.send(message_split.first)
-        message_split.delete message_split.first
-        object ? object.send(message_split.join("_")) : nil
-      end
+  module InstanceMethods
+    def method_missing(method_name, *attrs, &block)
+      object_method_name = method_name.to_s
+      object_name = self.class.demeter_names.find {|name| object_method_name =~ /^#{name}_/ }
+
+      return super unless object_name
+
+      object_method_name.gsub!(/^#{object_name}_/, "")
+
+      instance_eval <<-TXT
+        def #{method_name}                                          # def address_street
+          #{object_name}.#{object_method_name} if #{object_name}    #   address.street
+        end                                                         # end
+      TXT
+
+      send(method_name)
+    end
+  end
+
+  module ClassMethods
+    def demeter(*attr_names)
+      @@demeter_names ||= []
+      @@demeter_names += attr_names
+    end
+
+    def demeter_names
+      @@demeter_names
+    end
+
+    def demeter_names=(names)
+      @@demeter_names = names
     end
   end
 end
+
+# ActiveRecord support
+require "demeter/active_record"
