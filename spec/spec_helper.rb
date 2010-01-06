@@ -3,9 +3,6 @@ require "spec"
 require "benchmark"
 require "active_record"
 
-# Add library to the load path
-$LOAD_PATH.unshift File.dirname(__FILE__) + "/../lib"
-
 # Load library
 require "demeter"
 

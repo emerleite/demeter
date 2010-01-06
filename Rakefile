@@ -1,6 +1,6 @@
 require 'rake'
 require 'spec/rake/spectask'
-require File.dirname(__FILE__) + '/lib/demeter/version'
+require 'lib/demeter/version'
 require 'jeweler'
 
 desc 'Default: run specs.'
