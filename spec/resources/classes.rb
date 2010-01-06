@@ -23,8 +23,22 @@ end
 
 class VideoGame
   attr_accessor :title
+  attr_accessor :production_year
 end
 
 class Profile
   attr_accessor :interests
+end
+
+class Person
+  extend Demeter
+  attr_accessor :animal
+
+  def initialize
+    @animal = Animal.new
+  end
+end
+
+class Animal
+  attr_accessor :name
 end

@@ -10,7 +10,16 @@ describe "Demeter" do
     subject.address.street = "Some street"
     subject.address.zip_code = "98005"
     subject.video_game.title = "God of War 3"
+    subject.video_game.production_year = 1999
     subject.profile.interests = %w(games programming music movies)
+  end
+
+  it "should allow demeter only one object" do
+    Person.demeter :animal
+    person = Person.new
+    person.animal.name = "marley"
+
+    person.animal_name.should == "marley"
   end
 
   it "should not delegate existing methods" do
@@ -24,7 +33,7 @@ describe "Demeter" do
 
   it "should delegate methods from video game object" do
     subject.video_game_title.should == "God of War 3"
-    subject.video_game_title
+    subject.video_game_production_year.should == 1999
   end
 
   it "should return nil when demeter object is not set" do
