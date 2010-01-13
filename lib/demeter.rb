@@ -32,7 +32,7 @@ module Demeter
     end
 
     def demeter_names
-      @@demeter_names
+      @@demeter_names ||= []
     end
 
     def demeter_names=(names)

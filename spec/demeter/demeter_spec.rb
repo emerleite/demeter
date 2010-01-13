@@ -65,4 +65,11 @@ describe "Demeter" do
 
     doing { subject.address_title }.should raise_error(NoMethodError)
   end
+
+  describe Demeter::ClassMethods do
+    it "should return an array of demeter_names" do
+      Demeter::ClassMethods.send(:remove_class_variable, :@@demeter_names)
+      User.demeter_names.should be_kind_of(Array)
+    end
+  end
 end
