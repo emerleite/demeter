@@ -77,6 +77,7 @@ Contributor
 -----------
 
 * Nando Vieira (<http://simplesideias.com.br/>)
+* Tino Gomes (<http://blog.tinogomes.com/>)
 
 License:
 --------
