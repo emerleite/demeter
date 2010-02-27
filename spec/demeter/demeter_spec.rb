@@ -68,7 +68,6 @@ describe "Demeter" do
 
   describe Demeter::ClassMethods do
     it "should return an array of demeter_names" do
-      Demeter::ClassMethods.send(:remove_class_variable, :@@demeter_names)
       User.demeter_names.should be_kind_of(Array)
     end
   end

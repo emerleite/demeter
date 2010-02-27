@@ -4,6 +4,7 @@ require "benchmark"
 require "active_record"
 
 # Load library
+$LOAD_PATH.unshift File.dirname(__FILE__) + "/../lib"
 require "demeter"
 
 # Establish connection with in memory SQLite 3 database

@@ -3,6 +3,12 @@ module Demeter
     base.class_eval do
       include InstanceMethods
       extend ClassMethods
+
+      class << self
+        attr_accessor :demeter_names
+      end
+
+      base.demeter_names = []
     end
   end
 
@@ -27,16 +33,7 @@ module Demeter
 
   module ClassMethods
     def demeter(*attr_names)
-      @@demeter_names ||= []
-      @@demeter_names += attr_names
-    end
-
-    def demeter_names
-      @@demeter_names ||= []
-    end
-
-    def demeter_names=(names)
-      @@demeter_names = names
+      self.demeter_names = attr_names
     end
   end
 end

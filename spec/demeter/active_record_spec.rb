@@ -2,7 +2,9 @@ require File.dirname(__FILE__) + "/../spec_helper"
 
 describe "Demeter on ActiveRecord" do
   it "should respond to demeter method" do
-    ActiveRecord::Base.should respond_to(:demeter)
+    Project.should respond_to(:demeter)
+    Task.should respond_to(:demeter)
+    Owner.should respond_to(:demeter)
   end
 
   it "should dispatch original method missing" do
@@ -13,8 +15,15 @@ describe "Demeter on ActiveRecord" do
   end
 
   it "should also dispatch original method missing when not demetered" do
-    Demeter::ClassMethods.send(:remove_class_variable, :@@demeter_names)
     owner = Owner.new
-    owner.name.should be_nil #name uses ActiveRecord method_missing instance method
+    owner.name.should be_nil
+  end
+
+  it "should load demeter_names for each model" do
+    Task.demeter :project
+    Owner.demeter :task
+
+    Task.demeter_names.should == [:project]
+    Owner.demeter_names.should == [:task]
   end
 end
