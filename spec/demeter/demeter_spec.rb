@@ -14,6 +14,38 @@ describe "Demeter" do
     subject.profile.interests = %w(games programming music movies)
   end
 
+  it "should respond to demeterized methods" do
+    User.demeter :address
+    user = User.new
+
+    user.should respond_to(:address_street)
+    user.should respond_to(:address_city)
+    user.should respond_to(:address_country)
+    user.should respond_to(:address_state)
+    user.should respond_to(:address_zip_code)
+  end
+
+  it "should keep responding to instance methods" do
+    User.demeter :address
+    user = User.new
+
+    user.should respond_to(:name)
+    user.should respond_to(:address)
+    user.should respond_to(:video_game)
+    user.should respond_to(:profile)
+    user.should respond_to(:methods)
+    user.should respond_to(:public_methods)
+  end
+
+  it "should not respond to unknown methods" do
+    User.demeter :address
+    user = User.new
+
+    user.should_not respond_to(:video_game_title)
+    user.should_not respond_to(:video_production_year)
+    user.should_not respond_to(:profile_interests)
+  end
+
   it "should allow demeter only one object" do
     Person.demeter :animal
     person = Person.new
