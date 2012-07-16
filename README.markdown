@@ -39,7 +39,7 @@ Usage
 	user.address_country
 	#=> Brazil
 
-If your using ActiveRecord, you don't have to extend the `Demeter` module.
+If you are using ActiveRecord, you don't have to extend the `Demeter` module.
 
 	class User < ActiveRecord::Base
 	  has_one :address
